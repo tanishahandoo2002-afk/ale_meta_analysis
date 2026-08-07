@@ -1,0 +1,11 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+11,-36.0,-44.0,-6.0,3.0902323722839355,30464,Left Cerebral White Matter
+8,-16.0,44.0,10.0,3.0902323722839355,15960,Left Cerebral White Matter
+1,-50.0,16.0,26.0,3.0902323722839355,12432,"Inferior Frontal Gyrus, pars opercularis"
+22,4.0,-58.0,12.0,3.0902323722839355,11640,Precuneous Cortex
+10,70.0,-16.0,-12.0,3.0902323722839355,10704,"Middle Temporal Gyrus, posterior division"
+17,26.0,30.0,54.0,3.0902323722839355,6304,Superior Frontal Gyrus
+5,48.0,-64.0,-34.0,3.0902323722839355,5816,Unlabelled / white matter
+4,52.0,-66.0,26.0,3.0902323722839355,5816,"Lateral Occipital Cortex, superior division"
+6,-34.0,-70.0,-28.0,3.0902323722839355,5696,Unlabelled / white matter
+7,-18.0,-16.0,20.0,3.0902323722839355,5688,Left Cerebral White Matter

@@ -1,0 +1,11 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+13,30.0,-8.0,12.0,3.0902323722839355,11296,Right Cerebral White Matter
+7,46.0,-50.0,-56.0,3.0902323722839355,9720,Unlabelled / white matter
+3,-30.0,-44.0,-54.0,3.0902323722839355,7960,Unlabelled / white matter
+14,-52.0,-52.0,-40.0,3.0902323722839355,3544,Unlabelled / white matter
+11,24.0,-50.0,64.0,3.0902323722839355,3248,Superior Parietal Lobule
+8,-38.0,-12.0,16.0,3.0902323722839355,2392,Central Opercular Cortex
+10,-26.0,-46.0,72.0,3.0902323722839355,2336,Superior Parietal Lobule
+19,46.0,-66.0,2.0,3.0902323722839355,2328,"Lateral Occipital Cortex, inferior division"
+6,-18.0,-6.0,64.0,3.0902323722839355,2256,Superior Frontal Gyrus
+12,-26.0,-86.0,-42.0,3.0902323722839355,2248,Unlabelled / white matter

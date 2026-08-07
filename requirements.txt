@@ -1,0 +1,22 @@
+# Core meta-analysis engine
+nimare==0.20.0
+nilearn==0.13.1
+nibabel==5.4.2
+
+# Scientific stack
+numpy==2.4.6
+scipy==1.17.1
+pandas==3.0.5
+scikit-learn==1.9.0
+statsmodels==0.14.6
+
+# Visualisation & reporting
+matplotlib==3.11.1
+seaborn==0.13.2
+plotly==6.9.0
+tabulate==0.10.0
+
+# Config
+PyYAML==6.0.3
+
+# Requires Python 3.9-3.12 (developed on 3.11).

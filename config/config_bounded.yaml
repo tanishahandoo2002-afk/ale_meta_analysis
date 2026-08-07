@@ -1,0 +1,138 @@
+# ==========================================================================
+# Configuration for the Episodic Memory Retrieval ALE meta-analysis pipeline
+# ==========================================================================
+# Every stage of the pipeline reads from this file so the whole analysis is
+# reproducible and auditable. Change a parameter here, re-run, and the entire
+# downstream analysis updates. This is the single source of truth.
+
+project:
+  name: "Episodic Memory Retrieval — Coordinate-Based (ALE) Meta-Analysis"
+  construct: "episodic memory retrieval"
+  owner: "Tanisha Handoo"
+  random_seed: 42
+
+paths:
+  data_raw: "data/raw"
+  data_processed: "data/processed"
+  results: "results_bounded"
+  figures: "results_bounded/figures"
+  tables: "results_bounded/tables"
+  maps: "results_bounded/maps"
+
+# --------------------------------------------------------------------------
+# Data sources. We synthesise coordinates from multiple large, curated public
+# databases to reduce single-database bias. Each is fetched via NiMARE.
+# --------------------------------------------------------------------------
+databases:
+  neurosynth:
+    enabled: true
+    # Neurosynth: ~14,000 studies, automated coordinate + term extraction.
+  neuroquery:
+    enabled: true
+    # NeuroQuery: ~13,000 studies, alternative automated extraction pipeline.
+
+# --------------------------------------------------------------------------
+# Study curation. A study enters the meta-analysis if its abstract/labels
+# reflect the construct (inclusion terms) AND do not trip exclusion terms.
+# Term-based selection mirrors a systematic search string; every decision is
+# logged for the PRISMA diagram.
+# --------------------------------------------------------------------------
+curation:
+  # Terms that must be present (Neurosynth feature-space match, OR logic).
+  inclusion_terms:
+    - "episodic memory"
+    - "retrieval"
+    - "recollection"
+    - "recognition memory"
+    - "autobiographical"
+    - "remember"
+    - "encoding retrieval"
+  # Frequency threshold for a term to count as "present" in Neurosynth's TF-IDF
+  # feature matrix. Higher = stricter topical relevance.
+  term_frequency_threshold: 0.001
+  # Studies matching these are dropped (clinical / off-construct paradigms).
+  exclusion_terms:
+    - "working memory"
+    - "schizophrenia"
+    - "alzheimer"
+    - "lesion"
+    - "rodent"
+  # Minimum number of foci a study must report to be usable in ALE.
+  min_foci_per_study: 1
+  # Sensitivity knob: require a study to load on this many DISTINCT inclusion
+  # terms (1 = broad OR logic; 2+ = stricter, more specific construct).
+  min_inclusion_matches: 1
+  # Cap kept experiments to the most construct-relevant N (ranked by inclusion-
+  # term TF-IDF). Neurosynth alone yields ~1000 loosely-episodic experiments;
+  # ALE + FWE + jackknife over that many is compute-heavy and over-broad. These
+  # top-loading studies are foci-dense, so ~100 gives a focused, tractable,
+  # well-powered synthesis. Raise (or set null) if you have the compute.
+  max_experiments: 250
+
+# --------------------------------------------------------------------------
+# ALE analysis parameters. Cluster-level FWE is the field standard.
+# --------------------------------------------------------------------------
+ale:
+  kernel: "ale"               # ALE modeled-activation kernel (Gaussian)
+  # Monte-Carlo FWE is several s/permutation on foci-dense studies, so this
+  # dominates runtime. 300 gives a usable null for exploration; raise to
+  # 5000-10000 for a publication-grade result (Eickhoff et al. recommend >=5000).
+  n_iters: 2000               # permutations for the null distribution
+  cluster_forming_p: 0.001    # voxel-level cluster-forming threshold
+  fwe_cluster_p: 0.05         # cluster-level family-wise error threshold
+  n_cores: 7
+  # Neurosynth/NeuroQuery are automated databases and do NOT report per-study
+  # sample sizes, which ALE normally uses to size each study's Gaussian kernel.
+  # We therefore fix the kernel to a nominal sample size (a standard
+  # accommodation when sample sizes are unavailable). ~20 is a typical fMRI n
+  # and yields an Eickhoff-style FWHM of ~9-10 mm. Documented as a limitation.
+  fixed_sample_size: 20
+
+# --------------------------------------------------------------------------
+# Diagnostics — what separates a rigorous meta-analysis from a naive one.
+# --------------------------------------------------------------------------
+diagnostics:
+  run_jackknife: true         # leave-one-experiment-out stability of each cluster
+  run_focus_counter: true     # how many experiments drive each cluster
+  # File-drawer screen re-runs the whole ALE+FWE several times with injected
+  # noise experiments — very expensive. Off by default; enable when you can
+  # spare the compute (adds ~30-60 min at these settings).
+  fail_safe_n: true           # robustness to the file-drawer problem
+
+# --------------------------------------------------------------------------
+# Meta-analytic connectivity modeling (MACM): task-independent coactivation
+# of a seed region derived from the main ALE result.
+# --------------------------------------------------------------------------
+macm:
+  enabled: true
+  seed_from: "peak"           # place seed at the strongest ALE cluster peak
+  sphere_radius_mm: 6
+  # A seed in a heavily-studied region can coactivate with hundreds of studies,
+  # making the ALE+FWE prohibitively slow. Cap the coactivating set to a random
+  # (seeded) sample of this size for tractability; set null to use all.
+  max_studies: 60
+  n_iters: 1000               # permutations for the MACM null (own budget)
+
+# --------------------------------------------------------------------------
+# Functional decoding: what cognitive terms are associated with the
+# convergent regions (reverse inference via the database).
+# --------------------------------------------------------------------------
+decoding:
+  enabled: true
+  method: "neurosynth"        # correlation-based decoding against term maps
+  top_n_terms: 20
+
+# --------------------------------------------------------------------------
+# Subtraction / conjunction contrast. Splits retrieval studies into
+# recognition vs. recall to test where they diverge and converge.
+# --------------------------------------------------------------------------
+contrast:
+  enabled: true
+  # Terms below must exist in the Neurosynth TF-IDF vocabulary (exact match).
+  group_a:
+    name: "recognition"
+    terms: ["recognition memory", "familiarity", "recollection"]
+  group_b:
+    name: "recall"
+    terms: ["recall", "autobiographical", "autobiographical memory"]
+  n_iters: 1000

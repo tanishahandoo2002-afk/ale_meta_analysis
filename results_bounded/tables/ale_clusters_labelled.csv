@@ -1,0 +1,25 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+1,32.0,24.0,-4.0,13.84598445892334,6360,Insular Cortex
+2,-24.0,-18.0,-18.0,13.547223091125488,90392,Left Hippocampus
+2a,-28.0,-36.0,-14.0,12.430220603942871,,"Parahippocampal Gyrus, posterior division"
+2b,-6.0,-56.0,24.0,12.316893577575684,,Precuneous Cortex
+2c,-36.0,-56.0,44.0,11.205061912536621,,Left Cerebral Cortex
+3,-32.0,24.0,-4.0,11.9120512008667,76168,Frontal Orbital Cortex
+3a,-46.0,22.0,24.0,11.706430435180664,,Left Cerebral Cortex
+3b,-4.0,16.0,48.0,11.287575721740723,,Paracingulate Gyrus
+3c,-44.0,8.0,30.0,10.741707801818848,,Precentral Gyrus
+4,24.0,-10.0,-20.0,11.457147598266602,19984,Right Hippocampus
+4a,26.0,-24.0,-16.0,10.678535461425781,,Right Hippocampus
+4b,30.0,-40.0,-12.0,7.432002544403076,,Temporal Occipital Fusiform Cortex
+4c,52.0,-56.0,-12.0,4.997739315032959,,"Inferior Temporal Gyrus, temporooccipital part"
+5,36.0,-62.0,44.0,7.289505958557129,15896,"Lateral Occipital Cortex, superior division"
+5a,44.0,-64.0,26.0,7.148200511932373,,"Lateral Occipital Cortex, superior division"
+5b,40.0,-54.0,44.0,5.931521415710449,,Angular Gyrus
+5c,46.0,-38.0,48.0,5.392912864685059,,"Supramarginal Gyrus, posterior division"
+6,-12.0,6.0,8.0,6.273296356201172,6440,Left Cerebral White Matter
+6a,-4.0,-12.0,8.0,6.131228446960449,,Left Thalamus
+6b,-8.0,12.0,-4.0,5.478257656097412,,Left Accumbens
+7,48.0,14.0,30.0,6.112434387207031,6968,"Inferior Frontal Gyrus, pars opercularis"
+7a,48.0,30.0,20.0,4.670228958129883,,Middle Frontal Gyrus
+7b,50.0,28.0,28.0,4.549335956573486,,Middle Frontal Gyrus
+7c,44.0,38.0,26.0,4.0184855461120605,,Frontal Pole

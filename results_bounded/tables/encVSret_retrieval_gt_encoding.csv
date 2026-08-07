@@ -1,0 +1,11 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+11,-18.0,-56.0,26.0,3.0902323722839355,26968,Left Cerebral White Matter
+17,-56.0,26.0,16.0,3.0902323722839355,16768,"Inferior Frontal Gyrus, pars triangularis"
+9,-10.0,20.0,36.0,3.0902323722839355,9208,Paracingulate Gyrus
+19,-50.0,-72.0,26.0,3.0902323722839355,8608,"Lateral Occipital Cortex, superior division"
+14,-6.0,62.0,4.0,3.0902323722839355,4136,Frontal Pole
+5,44.0,20.0,30.0,3.0902323722839355,4080,Middle Frontal Gyrus
+8,-8.0,46.0,24.0,3.0902323722839355,3272,Paracingulate Gyrus
+13,-28.0,-38.0,-24.0,3.0902323722839355,3176,"Temporal Fusiform Cortex, posterior division"
+18,-40.0,4.0,-40.0,3.0902323722839355,2752,Temporal Pole
+4,46.0,20.0,-10.0,3.0902323722839355,1840,Frontal Orbital Cortex

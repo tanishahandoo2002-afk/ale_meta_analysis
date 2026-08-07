@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/processed/
+results/maps/
+*.nii.gz
+.DS_Store
+.ipynb_checkpoints/

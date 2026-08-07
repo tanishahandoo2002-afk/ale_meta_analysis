@@ -1,0 +1,9 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+1,-14.0,-62.0,28.0,3.0902323722839355,39480,Precuneous Cortex
+2,-40.0,22.0,18.0,3.0902323722839355,28464,Left Cerebral White Matter
+5,-4.0,36.0,32.0,3.0902323722839355,16200,Paracingulate Gyrus
+3,-26.0,-24.0,-14.0,3.0902323722839355,15288,Left Hippocampus
+6,26.0,-22.0,-16.0,3.0902323722839355,10608,Right Hippocampus
+7,42.0,-66.0,34.0,3.0902323722839355,7504,"Lateral Occipital Cortex, superior division"
+4,-10.0,-2.0,6.0,3.0902323722839355,4752,Left Thalamus
+8,34.0,24.0,-4.0,1.6546279191970825,2584,Insular Cortex

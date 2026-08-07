@@ -1,0 +1,11 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+1,-42.0,20.0,16.0,2.7130517959594727,21504,Left Cerebral White Matter
+2,-40.0,-62.0,38.0,2.7130517959594727,12744,"Lateral Occipital Cortex, superior division"
+3,-24.0,-22.0,-14.0,2.7130517959594727,12040,Left Hippocampus
+4,-6.0,-56.0,26.0,2.7130517959594727,10552,"Cingulate Gyrus, posterior division"
+7,24.0,-20.0,-16.0,2.7130517959594727,5832,Right Hippocampus
+6,-6.0,22.0,44.0,2.7130517959594727,5712,Paracingulate Gyrus
+5,-4.0,50.0,8.0,2.7130517959594727,5408,Paracingulate Gyrus
+8,42.0,-64.0,36.0,2.7130517959594727,4424,"Lateral Occipital Cortex, superior division"
+9,-58.0,-42.0,-6.0,2.1280453205108643,2512,"Middle Temporal Gyrus, posterior division"
+10,34.0,22.0,-2.0,1.6780705451965332,1880,Insular Cortex

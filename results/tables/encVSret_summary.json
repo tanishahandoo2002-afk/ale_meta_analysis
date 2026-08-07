@@ -1,0 +1,7 @@
+{
+  "n_encoding": 150,
+  "n_retrieval": 150,
+  "n_enc_gt_ret": 10,
+  "n_ret_gt_enc": 10,
+  "n_shared": 6
+}

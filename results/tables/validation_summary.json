@@ -1,0 +1,17 @@
+{
+  "sensitivity": {
+    "strict_n_experiments": 172,
+    "a_in_b": 0.875,
+    "b_in_a": 1.0,
+    "n_a": 8,
+    "n_b": 7
+  },
+  "cross_database": {
+    "db_a": "neurosynth",
+    "db_b": "neuroquery",
+    "a_in_b": 0.727,
+    "b_in_a": 0.8,
+    "n_a": 11,
+    "n_b": 10
+  }
+}

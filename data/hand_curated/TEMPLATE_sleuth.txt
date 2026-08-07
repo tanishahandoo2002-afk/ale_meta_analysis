@@ -1,0 +1,35 @@
+// Reference=MNI
+// ---------------------------------------------------------------------------
+// HAND-CURATED coordinate file (GingerALE / Sleuth format).
+//
+// HOW TO FILL THIS IN (one block per experiment/contrast):
+//   1. A line "// <StudyName_Year>" naming the paper (and contrast if a study
+//      reports several, e.g. Smith2019_RecollectionVsBaseline).
+//   2. A line "// Subjects=N" with the exact sample size for THAT contrast
+//      (critical — real ALE weights each experiment by its sample size).
+//   3. One line per activation peak: three whitespace-separated numbers,
+//      x  y  z  (in MNI space; convert Talairach->MNI first if needed).
+//   4. A blank line between experiments.
+//
+// INCLUSION RULES (keep consistent with docs/PROTOCOL.md):
+//   - whole-brain fMRI, healthy adults, episodic RETRIEVAL contrast
+//     (e.g. hits > correct rejections, remember > know, recall > baseline)
+//   - report peaks in MNI or Talairach (note which; convert Talairach->MNI)
+//   - exclude ROI-only analyses, patient groups, non-retrieval tasks
+//
+// Aim for ~20-30 experiments. Delete these comment lines and the two example
+// blocks below once you start entering real data.
+// ---------------------------------------------------------------------------
+
+// ExampleStudy2018_HitsVsCorrectRejections
+// Subjects=22
+-24  -20  -16
+-6   -58   28
+-44  -70   34
+6    52    4
+
+// ExampleStudy2020_RememberVsKnow
+// Subjects=18
+26   -22  -16
+-4   -52   24
+-42  24    28

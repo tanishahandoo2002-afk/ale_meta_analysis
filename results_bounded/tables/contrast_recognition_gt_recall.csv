@@ -1,0 +1,11 @@
+Cluster ID,X,Y,Z,Peak Stat,Cluster Size (mm3),Anatomical Label
+7,-20.0,-46.0,66.0,3.2905266284942627,8344,Postcentral Gyrus
+6,36.0,-30.0,58.0,3.2905266284942627,7432,Postcentral Gyrus
+14,-38.0,-58.0,50.0,3.2905266284942627,5728,Left Cerebral Cortex
+1,-26.0,-34.0,0.0,3.2905266284942627,2944,Left Cerebral White Matter
+23,-36.0,-54.0,-40.0,3.0902323722839355,2704,Unlabelled / white matter
+12,40.0,-62.0,54.0,3.2905266284942627,2696,"Lateral Occipital Cortex, superior division"
+8,-30.0,22.0,-4.0,3.2905266284942627,2160,Insular Cortex
+5,10.0,8.0,-4.0,3.2905266284942627,1960,Right Cerebral White Matter
+25,-22.0,-8.0,70.0,2.878161668777466,1664,Superior Frontal Gyrus
+15,2.0,-98.0,-10.0,3.0902323722839355,1568,Occipital Pole (near peak)
