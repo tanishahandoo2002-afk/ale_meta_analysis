@@ -4,6 +4,16 @@ __pycache__/
 data/raw/
 data/processed/
 results/maps/
+results_bounded/maps/
+results_publication/
 *.nii.gz
 .DS_Store
 .ipynb_checkpoints/
+
+# Generated Claude dashboards + heavy interactive viewers (not tracked;
+# the public frontend lives in ./site and deploys to GitHub Pages)
+results*/dashboard.html
+results*/figures/*_interactive.html
+
+# Stray AI-generated image export
+Gemini_Generated_Image_*.png

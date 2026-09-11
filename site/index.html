@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Episodic Memory Retrieval — ALE Meta-Analysis</title>
+<meta name="description" content="A reproducible coordinate-based (ALE) meta-analysis of the fMRI literature on episodic memory retrieval — 434 experiments from Neurosynth + NeuroQuery, with connectivity, decoding, and robustness/validation analyses.">
+<style>
+:root{
+  --ground:#f5f1e8; --panel:#fffdf8; --panel2:#faf6ee; --ink:#1f2430; --muted:#5c6675;
+  --line:#e5ddcd; --primary:#2f5d8a; --primary-soft:#e7eef6; --accent:#c2703a;
+  --good:#2f7d55; --good-bg:#e6f1ea;
+  --serif:ui-serif,Georgia,"Iowan Old Style","Times New Roman",serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --radius:14px; --shadow:0 1px 2px rgba(31,36,48,.05),0 10px 26px rgba(31,36,48,.06);
+}
+@media (prefers-color-scheme:dark){:root{
+  --ground:#0f1216; --panel:#171c23; --panel2:#12161c; --ink:#e7ebf1; --muted:#98a2b0;
+  --line:#252c37; --primary:#7fb0dd; --primary-soft:#18222e; --accent:#dd9257;
+  --good:#5fb98a; --good-bg:#152318;
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);line-height:1.6}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--primary)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+header.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 90%,transparent);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 22px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-weight:600;font-size:1.02rem}
+.brand .dot{color:var(--accent)}
+.nav a{margin-left:16px;font-size:.86rem;font-weight:600;text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--primary);color:#fff;text-decoration:none;font-weight:600;
+  font-size:.9rem;padding:10px 18px;border-radius:10px;box-shadow:var(--shadow)}
+.btn.ghost{background:transparent;color:var(--primary);border:1px solid var(--line)}
+.eyebrow{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.hero{padding:64px 0 20px}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.1rem,5vw,3.4rem);line-height:1.05;
+  margin:.35em 0 .3em;max-width:16ch;text-wrap:balance}
+.hero p.lede{font-size:1.16rem;color:var(--muted);max-width:60ch;margin:0 0 22px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:34px 0 8px}
+.chip{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow)}
+.chip b{display:block;font-family:var(--serif);font-size:1.6rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.chip span{display:block;font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+section.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:30px 32px;margin-top:24px;box-shadow:var(--shadow)}
+section.card h2{font-family:var(--serif);font-weight:600;font-size:1.55rem;margin:.1em 0 .3em}
+.num{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:.5ch}
+.note{color:var(--muted);max-width:72ch}
+figure{margin:18px 0 0;background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:14px}
+figure img{border-radius:8px;background:#fff}
+figcaption{font-size:.86rem;color:var(--muted);margin-top:10px;line-height:1.5}
+figcaption b{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media (max-width:760px){.grid2{grid-template-columns:1fr}}
+.table-wrap{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+thead th{background:var(--primary-soft);text-align:left;padding:10px 13px;font-weight:600;white-space:nowrap}
+tbody td{padding:9px 13px;border-top:1px solid var(--line);font-variant-numeric:tabular-nums}
+tbody tr:hover{background:color-mix(in srgb,var(--primary-soft) 45%,transparent)}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-top:10px}
+.vcard{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.vcard b{font-family:var(--serif);font-size:1.7rem;color:var(--good);display:block;line-height:1;font-variant-numeric:tabular-nums}
+.vcard span{font-size:.86rem;color:var(--muted);display:block;margin-top:7px;line-height:1.4}
+ul.tight{margin:10px 0 0;padding-left:1.15em;color:var(--muted)}
+ul.tight li{margin:7px 0}
+.terms{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.term{background:var(--primary-soft);color:var(--primary);border-radius:8px;padding:5px 11px;font-size:.82rem;font-weight:600}
+footer{margin-top:32px;padding:30px 0 70px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+footer a{font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="top"><div class="wrap">
+  <span class="brand">Episodic Retrieval <span class="dot">·</span> ALE Meta-Analysis</span>
+  <nav class="nav">
+    <a href="#findings">Findings</a>
+    <a href="#robustness">Robustness</a>
+    <a href="#methods">Methods</a>
+    <a href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis">GitHub</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Coordinate-based meta-analysis · NiMARE</div>
+    <h1>Where the brain converges during episodic memory retrieval</h1>
+    <p class="lede">A reproducible synthesis of the published fMRI literature —
+      <b>434 experiments</b> pooled from two independent coordinate databases
+      (Neurosynth + NeuroQuery) with Activation Likelihood Estimation, then
+      stress-tested for robustness and mapped from every angle.</p>
+    <div class="actions">
+      <a class="btn" href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis">View the code on GitHub</a>
+      <a class="btn ghost" href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis/blob/main/docs/MANUSCRIPT.md">Read the write-up</a>
+    </div>
+    <div class="chips">
+      <div class="chip"><b>434</b><span>experiments</span></div>
+      <div class="chip"><b>2,000</b><span>permutations</span></div>
+      <div class="chip"><b>7</b><span>convergent clusters</span></div>
+      <div class="chip"><b>32%</b><span>overlap with DMN</span></div>
+      <div class="chip"><b>7 / 7</b><span>landmark nodes recovered</span></div>
+    </div>
+  </section>
+
+  <section class="card" id="findings">
+    <div class="eyebrow"><span class="num">01</span>Convergent activation</div>
+    <h2>Where activation reliably converges</h2>
+    <p class="note">Activation Likelihood Estimation with cluster-level
+      family-wise-error correction (voxel p&lt;0.001, cluster p&lt;0.05, 2,000
+      permutations). Peaks are labelled with the Harvard–Oxford atlas.</p>
+    <div class="grid2">
+      <figure><img src="assets/ale_glass_brain.png" alt="Glass-brain of convergent activation">
+        <figcaption><b>Glass brain.</b> A see-through projection; brighter = stronger
+        cross-study convergence. The whole recollection network at a glance.</figcaption></figure>
+      <figure><img src="assets/ale_surface.png" alt="Cortical surface rendering">
+        <figcaption><b>Inflated surface.</b> Convergence on the folded cortex, with
+        sulci unfolded so buried activation is visible.</figcaption></figure>
+    </div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>Region (peak)</th><th>x</th><th>y</th><th>z</th><th>Peak ALE-z</th><th>Size (mm³)</th></tr></thead>
+      <tbody>
+        <tr><td>Right anterior insula</td><td>32</td><td>24</td><td>−4</td><td>13.8</td><td>6,360</td></tr>
+        <tr><td>Left hippocampus (→ precuneus, parahippocampal, parietal)</td><td>−24</td><td>−18</td><td>−18</td><td>13.5</td><td>90,392</td></tr>
+        <tr><td>Left orbitofrontal / inferior frontal</td><td>−32</td><td>24</td><td>−4</td><td>11.9</td><td>76,168</td></tr>
+        <tr><td>Right hippocampus</td><td>24</td><td>−10</td><td>−20</td><td>11.5</td><td>19,984</td></tr>
+        <tr><td>Right lateral parietal (angular / LOC)</td><td>36</td><td>−62</td><td>44</td><td>7.3</td><td>15,896</td></tr>
+        <tr><td>Thalamus / accumbens</td><td>−12</td><td>6</td><td>8</td><td>6.3</td><td>6,440</td></tr>
+        <tr><td>Right inferior frontal gyrus</td><td>48</td><td>14</td><td>30</td><td>6.1</td><td>6,968</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin-top:14px">The strongest convergence is in the
+      <b>hippocampus</b> and a large left-lateral cluster spanning
+      precuneus/posterior-cingulate and lateral parietal cortex — the canonical
+      <b>core recollection network</b>, plus lateral prefrontal retrieval-control regions.</p>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow"><span class="num">02</span>Functional decoding</div>
+    <h2>What the region is “about”</h2>
+    <p class="note">Reverse inference: the cognitive terms most associated with the
+      convergent region across ~14,000 studies. Memory/retrieval terms rise to the
+      top — an independent confirmation of the region's function.</p>
+    <div class="grid2">
+      <figure><img src="assets/decoding_terms.png" alt="Functional decoding bar chart">
+        <figcaption><b>Top associated terms.</b> Bar length = association strength.</figcaption></figure>
+      <div>
+        <div class="terms">
+          <span class="term">retrieval</span><span class="term">memory</span>
+          <span class="term">episodic</span><span class="term">memory retrieval</span>
+          <span class="term">network</span><span class="term">processes</span>
+          <span class="term">engaged</span><span class="term">task</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow"><span class="num">03</span>Network &amp; dual-process</div>
+    <h2>Connectivity and sub-processes</h2>
+    <div class="grid2">
+      <figure><img src="assets/macm_glass_brain.png" alt="MACM coactivation network">
+        <figcaption><b>Coactivation network (MACM).</b> Regions that coactivate with the
+        strongest retrieval hub across the whole database — its functional network.</figcaption></figure>
+      <figure><img src="assets/contrast_subtraction_glass.png" alt="Recognition vs recall contrast">
+        <figcaption><b>Recognition vs. recall.</b> Where the two retrieval sub-processes
+        diverge (a test of dual-process theory); they share a hippocampal–parietal core.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="robustness">
+    <div class="eyebrow"><span class="num">04</span>Robustness &amp; validation</div>
+    <h2>Is the result trustworthy?</h2>
+    <p class="note">The result is stress-tested five ways — the difference between a
+      rigorous meta-analysis and a naïve one.</p>
+    <div class="vgrid">
+      <div class="vcard"><b>100+</b><span>independent experiments support each main cluster (jackknife)</span></div>
+      <div class="vcard"><b>88%</b><span>of clusters replicate under a stricter construct definition</span></div>
+      <div class="vcard"><b>73–80%</b><span>agreement between the two independent databases</span></div>
+      <div class="vcard"><b>7 / 7</b><span>canonical recollection-network nodes recovered</span></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <figure><img src="assets/diag_robustness.png" alt="Per-cluster robustness">
+        <figcaption><b>Per-cluster robustness.</b> Bar length = supporting experiments;
+        colour = how much a single study can sway the cluster (green robust → red fragile).</figcaption></figure>
+      <figure><img src="assets/dmn_overlap.png" alt="Overlap with the default-mode network">
+        <figcaption><b>Default-mode-network overlap.</b> Retrieval convergence (hot) with
+        the DMN outlined (green): 32% overlap — substantial but not identical.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card" id="methods">
+    <div class="eyebrow"><span class="num">05</span>How it was done</div>
+    <h2>Methods &amp; provenance</h2>
+    <div class="grid2">
+      <div>
+        <ul class="tight">
+          <li>Coordinates pulled from <b>Neurosynth</b> (~14k studies) and
+            <b>NeuroQuery</b> (~13k) via NiMARE.</li>
+          <li>Term-based screening → 434 merged, de-duplicated experiments
+            (see PRISMA).</li>
+          <li><b>ALE + cluster-FWE</b> (2,000 permutations); Harvard–Oxford labelling.</li>
+          <li>Extras: <b>MACM</b>, functional <b>decoding</b>, recognition-vs-recall
+            and encoding-vs-retrieval contrasts, <b>DMN</b> overlap, landmark recovery.</li>
+          <li>Diagnostics: jackknife, focus-counter, file-drawer; validation:
+            sensitivity + cross-database.</li>
+          <li>Fully reproducible from one config file and one command.</li>
+        </ul>
+        <div class="actions" style="margin-top:16px">
+          <a class="btn ghost" href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis/blob/main/docs/METHODS.md">Full methods</a>
+          <a class="btn ghost" href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis/blob/main/results_bounded/REPORT.md">Results report</a>
+        </div>
+      </div>
+      <figure><img src="assets/prisma_flow.png" alt="PRISMA study-selection flow">
+        <figcaption><b>PRISMA flow.</b> How the pool narrows from every record identified
+        to the 434 experiments included.</figcaption></figure>
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="eyebrow"><span class="num">06</span>Honest scope</div>
+    <h2>What this is — and isn't</h2>
+    <p class="note">This is a <b>reproducible computational meta-analysis</b> that
+      recovers the established episodic-retrieval network from large automated
+      databases, with layered robustness and validation. It is a high-throughput
+      complement to — not a replacement for — a hand-screened systematic review:
+      it uses text-mined coordinates and a fixed kernel (databases don't report
+      per-study sample sizes), and it confirms rather than overturns the known
+      literature. A hand-curated, sample-size-weighted ALE is the planned next step.</p>
+  </section>
+
+  <footer><div>
+    Built with <a href="https://nimare.readthedocs.io">NiMARE</a> ·
+    data from <a href="https://neurosynth.org">Neurosynth</a> &amp;
+    <a href="https://neuroquery.org">NeuroQuery</a> ·
+    code &amp; full write-up on
+    <a href="https://github.com/tanishahandoo2002-afk/ale_meta_analysis">GitHub</a>.
+    <br>Tanisha Handoo — B.Sc. Neurosciences &amp; Neuropsychology.
+  </div></footer>
+
+</div>
+</body>
+</html>

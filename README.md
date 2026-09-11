@@ -1,147 +1,131 @@
 # Coordinate-Based (ALE) Meta-Analysis of Episodic Memory Retrieval
 
 A fully reproducible, coordinate-based **Activation Likelihood Estimation (ALE)**
-meta-analysis pipeline that synthesises the published fMRI literature on
-**episodic memory retrieval** — computed end-to-end in open-source Python
-([NiMARE](https://nimare.readthedocs.io)) on real coordinates pulled from
-multiple public neuroimaging databases.
+meta-analysis that synthesises the published fMRI literature on **episodic memory
+retrieval** — **434 experiments** pooled from two independent public databases
+(Neurosynth + NeuroQuery) with [NiMARE](https://nimare.readthedocs.io), then
+extended with connectivity, decoding, and robustness/validation analyses.
 
-> **Owner:** Tanisha Handoo — B.Sc. Neurosciences & Neuropsychology, Amity University.
-> This is the computational / cognitive-neuroscience complement to an EEG
-> classification project: where that works at the single-study, signal level,
-> this works at the level of *quantitative synthesis across the whole
-> literature*.
+### 🔗 Live site: **https://tanishahandoo2002-afk.github.io/ale_meta_analysis/**
+
+*Tanisha Handoo — B.Sc. Neurosciences & Neuropsychology, Amity University.*
 
 ---
 
-## Why this is more than a manual GingerALE study
+![Convergent activation — glass brain](site/assets/ale_glass_brain.png)
 
-The original brief describes the classic manual workflow: search PubMed by hand,
-screen abstracts, type coordinates into GingerALE, threshold, and write up. This
-project keeps that scientific logic but rebuilds it as **reproducible code** and
-extends it with methods that a point-and-click workflow cannot easily do:
-
-| Capability | Manual GingerALE | This pipeline |
-|---|---|---|
-| Literature ingest | Manual PubMed search + typing coordinates | Programmatic pull from **Neurosynth (~14k studies)** and **NeuroQuery (~13k studies)** |
-| Screening / PRISMA | Manual, subjective | Reproducible term-based selection with an auto-generated **PRISMA flow diagram** |
-| ALE + FWE | ✔ | ✔ (cluster-level FWE, Monte-Carlo) |
-| Robustness diagnostics | — | **Jackknife**, **focus-counter**, **file-drawer / publication-bias** screen |
-| Connectivity | — | **Meta-analytic coactivation modeling (MACM)** |
-| Reverse inference | — | **Functional decoding** against ~14k studies |
-| Theory testing | — | **Subtraction & conjunction** (recognition vs. recall) |
-| Anatomical labelling | Manual atlas lookup | Automated Harvard-Oxford labelling |
-| Reproducibility | Low | One command, one config file, fixed seed |
-
-Every parameter lives in [`config/config.yaml`](config/config.yaml); change it,
-re-run, and the whole analysis (including figures and the written report)
-regenerates.
+*Convergent retrieval-related activation across 434 experiments (ALE,
+cluster-level FWE). The hippocampus, precuneus/posterior-cingulate, lateral
+parietal cortex and medial/lateral prefrontal cortex — the core recollection
+network.*
 
 ---
 
-## The neuroscience question
+## What this is (and isn't)
 
-Episodic memory retrieval — recovering a specific past experience with its
-spatiotemporal context — is theorised to depend on a **core recollection
-network**: medial temporal lobe (esp. hippocampus), posterior medial parietal
-cortex (precuneus / posterior cingulate / retrosplenial), lateral parietal
-cortex (angular gyrus), and medial prefrontal cortex. Dual-process theory
-further splits retrieval into **recollection** (detailed, context-rich,
-hippocampal/parietal) and **familiarity** (context-free "oldness",
-perirhinal). This pipeline asks, quantitatively across the literature:
+A **reproducible computational meta-analysis** that recovers the established
+episodic-retrieval network from large automated databases, with layered
+robustness and validation. It is a high-throughput **complement to — not a
+replacement for — a hand-screened systematic review**: it uses text-mined
+coordinates and a fixed kernel (the databases don't report per-study sample
+sizes), and it confirms rather than overturns the known literature. A
+hand-curated, sample-size-weighted ALE is the planned next step
+(see [`docs/HAND_CURATION.md`](docs/HAND_CURATION.md) and
+[`docs/RESEARCH_ROADMAP.md`](docs/RESEARCH_ROADMAP.md)).
 
-1. **Where** does activation reliably converge during episodic retrieval? (ALE)
-2. **How robust** is each convergent region to individual studies and to the
-   file-drawer problem? (diagnostics)
-3. **What network** does the strongest hub co-activate with? (MACM)
-4. **What is the region's functional identity** per the wider literature? (decoding)
-5. **Do recognition and recall diverge** where dual-process theory predicts?
-   (subtraction / conjunction)
+## Key results
 
-See [`docs/METHODS.md`](docs/METHODS.md) for the full methodology and
-[`docs/GLOSSARY.md`](docs/GLOSSARY.md) for the neuroscience and method concepts.
+| | |
+|---|---|
+| **434** | experiments (250/database, merged & de-duplicated) |
+| **2,000** | Monte-Carlo permutations (cluster-level FWE) |
+| **7** | convergent clusters (peak ALE-z up to 13.8) |
+| **32%** | of the retrieval map overlaps the default-mode network |
+| **7 / 7** | canonical recollection-network landmarks recovered |
+| **88% · 73–80%** | replication under a stricter construct · cross-database agreement |
 
----
+### Convergent regions
 
-## Quickstart
+| Region (peak) | x | y | z | Peak ALE-z | Size (mm³) |
+|---|--:|--:|--:|--:|--:|
+| Right anterior insula | 32 | 24 | −4 | 13.8 | 6,360 |
+| Left hippocampus (→ precuneus, parahippocampal, parietal) | −24 | −18 | −18 | 13.5 | 90,392 |
+| Left orbitofrontal / inferior frontal | −32 | 24 | −4 | 11.9 | 76,168 |
+| Right hippocampus | 24 | −10 | −20 | 11.5 | 19,984 |
+| Right lateral parietal (angular / LOC) | 36 | −62 | 44 | 7.3 | 15,896 |
+| Thalamus / accumbens | −12 | 6 | 8 | 6.3 | 6,440 |
+| Right inferior frontal gyrus | 48 | 14 | 30 | 6.1 | 6,968 |
+
+### Cortical surface · Functional decoding
+
+<p align="center">
+  <img src="site/assets/ale_surface.png" width="49%" alt="Cortical surface rendering">
+  <img src="site/assets/decoding_terms.png" width="49%" alt="Functional decoding terms">
+</p>
+
+*Left: convergence on the inflated cortex. Right: reverse-inference decoding —
+the region is most associated with* retrieval, memory, episodic *across ~14,000
+studies, independently confirming its function.*
+
+### Default-mode overlap · Per-cluster robustness
+
+<p align="center">
+  <img src="site/assets/dmn_overlap.png" width="49%" alt="DMN overlap">
+  <img src="site/assets/diag_robustness.png" width="49%" alt="Per-cluster robustness">
+</p>
+
+### Study selection (PRISMA)
+
+<p align="center"><img src="site/assets/prisma_flow.png" width="62%" alt="PRISMA flow"></p>
+
+## What's included
+
+- **ALE + cluster-level FWE** correction, Harvard–Oxford anatomical labelling
+- **MACM** (meta-analytic coactivation modelling) of the strongest hub
+- **Functional decoding** (reverse inference against ~14k studies)
+- **Dual-process** (recognition vs. recall) and **encoding vs. retrieval** contrasts
+- **Default-mode-network overlap** and **landmark recovery** vs. the recollection network
+- **Robustness**: jackknife, focus-counter, file-drawer (publication-bias) screen
+- **Validation**: stricter-construct sensitivity analysis + cross-database replication
+- A **GingerALE/Sleuth export** for independent reproduction
+
+## Reproduce it
 
 ```bash
-# 1. Environment (Python 3.9–3.12; developed on 3.11)
-python3.11 -m venv .venv
-source .venv/bin/activate
+python3.11 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Run the whole pipeline (first run downloads ~0.5 GB of databases and caches them)
-PYTHONPATH=src python scripts/run_pipeline.py
-
-# Quick smoke test with fewer permutations:
-PYTHONPATH=src python scripts/run_pipeline.py --fast
-
-# Larger / higher-iteration runs: CAP THE THREADS or joblib+BLAS+numba will
-# oversubscribe (hundreds of threads, load average 200+). Always prefix:
+# Full pipeline (bounded, tractable config). Thread caps prevent oversubscription.
 OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 \
 NUMEXPR_NUM_THREADS=1 NUMBA_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 \
   PYTHONPATH=src python scripts/run_pipeline.py --config config/config_bounded.yaml
-
-# Skip the expensive stages:
-PYTHONPATH=src python scripts/run_pipeline.py --skip-diagnostics --skip-macm
 ```
 
-Outputs land in `results/`:
-
-```
-results/
-├── REPORT.md                 # full methods + results write-up skeleton
-├── SUMMARY.md                # one-page plain-language summary
-├── figures/
-│   ├── prisma_flow.png       # PRISMA study-selection diagram
-│   ├── ale_glass_brain.png   # convergent activation (headline figure)
-│   ├── ale_slices.png
-│   ├── ale_interactive.html  # explore the map in a browser
-│   ├── macm_glass_brain.png  # coactivation network
-│   ├── decoding_terms.png    # functional decoding bar chart
-│   └── diag_focus_counter.png
-├── tables/                   # every result as CSV
-└── maps/                     # NIfTI statistical maps (open in Mango/MRIcroGL)
-```
-
----
+Everything is driven by one YAML config; the first run downloads and caches the
+databases. Outputs (maps, tables, figures, report) land in `results_bounded/`.
 
 ## Repository layout
 
 ```
-config/config.yaml            # single source of truth for every parameter
-src/ale_meta/
-├── config.py                 # typed config loader + reproducible seeding
-├── datasets.py               # fetch/cache Neurosynth + NeuroQuery
-├── curation.py               # term-based study selection + PRISMA accounting
-├── prisma.py                 # PRISMA flow-diagram rendering
-├── ale.py                    # ALE + cluster-level FWE, cluster tables
-├── diagnostics.py            # jackknife, focus-counter, file-drawer robustness
-├── macm.py                   # meta-analytic coactivation modeling
-├── decoding.py               # functional decoding (reverse inference)
-├── contrast.py               # subtraction + conjunction of sub-constructs
-├── viz.py                    # glass-brain / slices / interactive / bar charts
-└── report.py                 # anatomical labelling + REPORT.md / SUMMARY.md
-scripts/run_pipeline.py       # end-to-end orchestrator
-docs/                         # PROTOCOL, METHODS, GLOSSARY
+site/                     # static frontend deployed to GitHub Pages
+src/ale_meta/             # the pipeline (datasets, curation, ale, diagnostics,
+                          #   macm, decoding, contrast, advanced, figures, report)
+scripts/                  # run_pipeline.py, publication_extras.py, run_hand_curated.py
+config/                   # config.yaml + bounded/publication variants
+docs/                     # PROTOCOL, METHODS, GLOSSARY, MANUSCRIPT, HAND_CURATION, RESEARCH_ROADMAP
+results_bounded/          # results of the reported run (report, tables, figures)
+data/hand_curated/        # template for the hand-curated ALE (next step)
 ```
-
----
 
 ## Data provenance & honesty note
 
-Coordinates come from **Neurosynth** and **NeuroQuery**, large databases built by
-*automated* text-mining and coordinate extraction. This makes the analysis
-reproducible and high-throughput, but the selection is broader and noisier than
-hand-screened, full-text inclusion. Treat the result as a **large-scale,
-automated complement** to a manual PRISMA review, not a substitute for one. No
-results are fabricated: every number in `results/` is computed from real
-published coordinates by the code in this repository.
+Coordinates come from **Neurosynth** and **NeuroQuery**, built by *automated*
+text-mining. This makes the analysis reproducible and high-throughput but
+broader/noisier than hand-screened inclusion; every number in `results_bounded/`
+is computed from real published coordinates by the code here. A 5,000-permutation
+full-pool confirmatory run belongs on a cluster/cloud (see the roadmap).
 
 ## Key references
-- Eickhoff et al. (2012, 2016) — ALE algorithm and cluster-level FWE.
-- Yarkoni et al. (2011) — Neurosynth.
-- Dockès et al. (2020) — NeuroQuery.
-- Salo et al. (2023) — NiMARE.
-- Rugg & Vilberg (2013) — core recollection network.
+Eickhoff et al. (2012, 2016) · Turkeltaub et al. (2012) · Yarkoni et al. (2011,
+Neurosynth) · Dockès et al. (2020, NeuroQuery) · Salo et al. (2023, NiMARE) ·
+Rugg & Vilberg (2013, recollection network).
